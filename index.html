@@ -515,17 +515,39 @@
             transform-style: preserve-3d;
             transition: transform 0.3s;
             background: var(--ink); /* fallback while loading */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .crest-image-wrapper:hover {
             transform: rotateY(5deg) rotateX(5deg) scale(1.02);
         }
+
         .crest-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center;
             animation: spin-slow 20s linear infinite;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
+        .crest-img.hidden {
+            display: none;
+        }
+
+        /* Fallback text when image fails */
+        .crest-fallback {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            color: var(--primary);
+            text-shadow: 0 0 30px var(--primary-glow);
+            letter-spacing: 0.1em;
+            z-index: 2;
+            pointer-events: none;
+        }
+
         .crest-gloss {
             position: absolute;
             top: 0;
@@ -535,6 +557,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, transparent 50%, rgba(255, 255, 255, 0.05) 100%);
             pointer-events: none;
             border-radius: 50%;
+            z-index: 3;
         }
         @keyframes spin-slow {
             0% {
@@ -1391,8 +1414,10 @@
             <div class="crest-wrap">
                 <div class="glow-ring"></div>
                 <div class="crest-image-wrapper">
-                    <!-- Replace with your actual crest image (image0.png) -->
-                    <img src="image0.png" alt="Ghost Twenty Crest" class="crest-img" loading="lazy" onerror="this.style.display='none'" />
+                    <!-- Crest image: if it fails to load, we show a fallback text -->
+                    <img src="image0.png" alt="Ghost Twenty Crest" class="crest-img" id="crestImg"
+                         onerror="this.classList.add('hidden'); document.getElementById('crestFallback').style.display='block';" />
+                    <div class="crest-fallback" id="crestFallback" style="display:none;">GT</div>
                     <div class="crest-gloss"></div>
                 </div>
             </div>
@@ -1546,7 +1571,6 @@
                 </div>
 
                 <div class="catalogue-grid">
-                    <!-- Replace src with your actual product images (image1.png ... image10.png) -->
                     <div class="catalogue-item">
                         <div class="item-image"><img src="image1.png" alt="GHOST TEE" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">GHOST TEE</div>
@@ -1685,7 +1709,6 @@
             }
 
             function animateLayers() {
-                // smooth interpolation
                 centerX += (targetX - centerX) * 0.08;
                 centerY += (targetY - centerY) * 0.08;
 
@@ -1707,7 +1730,7 @@
                 }
             });
 
-            // Touch with device orientation fallback
+            // Touch
             document.addEventListener('touchstart', (e) => {
                 isTouching = true;
                 const touch = e.touches[0];
@@ -1725,16 +1748,15 @@
 
             document.addEventListener('touchend', () => {
                 isTouching = false;
-                // slowly return to center
                 targetX = 0;
                 targetY = 0;
             }, { passive: true });
 
-            // Device orientation (mobile)
+            // Device orientation
             if (window.DeviceOrientationEvent) {
                 window.addEventListener('deviceorientation', (e) => {
                     if (!isTouching) {
-                        const gamma = (e.gamma || 0) / 30; // -1..1
+                        const gamma = (e.gamma || 0) / 30;
                         const beta = (e.beta || 0) / 30;
                         targetX = Math.max(-1, Math.min(1, gamma));
                         targetY = Math.max(-1, Math.min(1, beta));
@@ -1742,7 +1764,6 @@
                 }, { passive: true });
             }
 
-            // Start 3D loop
             animateLayers();
 
             // ─── MOBILE NAV ───
