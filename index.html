@@ -9,7 +9,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;600;800&family=Permanent+Marker&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;600;800;900&family=Permanent+Marker&display=swap" rel="stylesheet" />
 
     <style>
         /* ─────────────────────────────────────────────
@@ -30,6 +30,7 @@
             --bone: #f0ede8;
             --primary: #ff5500;
             --primary-glow: rgba(255, 85, 0, 0.5);
+            --primary-subtle: rgba(255, 85, 0, 0.12);
             --acid: #b3f05a;
             --border: rgba(255, 255, 255, 0.06);
             --glossy-card: rgba(255, 255, 255, 0.03);
@@ -341,9 +342,10 @@
             bottom: -4px;
             left: 0;
             width: 0;
-            height: 1px;
+            height: 2px;
             background: var(--primary);
             transition: width 0.3s;
+            box-shadow: 0 0 10px var(--primary-glow);
         }
         .nav-links a:hover {
             color: var(--primary);
@@ -355,7 +357,7 @@
         .nav-cta {
             border: 1px solid var(--primary);
             border-radius: 9999px;
-            padding: 0.4rem 1rem;
+            padding: 0.4rem 1.2rem;
             font-family: var(--font-display);
             font-size: 0.7rem;
             letter-spacing: 0.1em;
@@ -367,7 +369,7 @@
         .nav-cta:hover {
             background: var(--primary);
             color: #000;
-            box-shadow: 0 0 30px var(--primary-glow);
+            box-shadow: 0 0 40px var(--primary-glow);
         }
 
         .mobile-menu-btn {
@@ -514,7 +516,7 @@
             border: 2px solid var(--glossy-border);
             transform-style: preserve-3d;
             transition: transform 0.3s;
-            background: var(--ink); /* fallback while loading */
+            background: var(--ink);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -537,7 +539,6 @@
             display: none;
         }
 
-        /* Fallback text when image fails */
         .crest-fallback {
             font-family: var(--font-display);
             font-size: clamp(2.5rem, 6vw, 5rem);
@@ -546,6 +547,7 @@
             letter-spacing: 0.1em;
             z-index: 2;
             pointer-events: none;
+            animation: spin-slow 20s linear infinite;
         }
 
         .crest-gloss {
@@ -683,6 +685,14 @@
             }
         }
 
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.2;
+            margin: 0;
+        }
+
         .section-header {
             display: flex;
             align-items: flex-end;
@@ -697,6 +707,7 @@
             letter-spacing: 0.4em;
             color: var(--primary);
             margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px var(--primary-glow);
         }
         .section-header h2 {
             font-family: var(--font-display);
@@ -718,6 +729,9 @@
         /* ─────────────────────────────────────────────
                    LOOKBOOK
                 ───────────────────────────────────────────── */
+        .lookbook-wrapper {
+            position: relative;
+        }
         .lookbook-scroll {
             display: flex;
             gap: 1.25rem;
@@ -742,6 +756,7 @@
             border: 1px solid var(--glossy-border);
             backdrop-filter: blur(8px);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
         }
         .lookbook-card:hover {
             transform: scale(1.02);
@@ -1046,11 +1061,50 @@
             flex-direction: column;
             align-items: center;
             transform: translateZ(0);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        /* Glowing border on hover */
+        .catalogue-item::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 1.25rem;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent, var(--primary), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+        .catalogue-item:hover::before {
+            opacity: 1;
         }
         .catalogue-item:hover {
             transform: translateY(-12px) scale(1.03);
             box-shadow: var(--shadow-heavy), 0 0 40px rgba(255, 85, 0, 0.12);
             border-color: var(--primary);
+        }
+
+        /* Hot badge */
+        .catalogue-item .hot-badge {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: var(--primary);
+            color: #000;
+            font-size: 0.55rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            z-index: 2;
+            box-shadow: 0 0 20px var(--primary-glow);
         }
 
         .catalogue-item .item-image {
@@ -1059,8 +1113,9 @@
             border-radius: 0.75rem;
             overflow: hidden;
             margin-bottom: 0.75rem;
-            background: var(--ink); /* fallback while loading */
+            background: var(--ink);
             border: 1px solid var(--glossy-border);
+            position: relative;
         }
         .catalogue-item .item-image img {
             width: 100%;
@@ -1078,14 +1133,15 @@
             font-size: 0.8rem;
             letter-spacing: 0.05em;
             color: var(--bone);
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.15rem;
         }
         .catalogue-item .item-price {
             font-family: var(--font-sans);
-            font-weight: 800;
+            font-weight: 900;
             font-size: 1rem;
             color: var(--primary);
             margin-bottom: 0.75rem;
+            text-shadow: 0 0 20px var(--primary-glow);
         }
         .catalogue-item .item-btn {
             width: 100%;
@@ -1100,6 +1156,22 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(255, 85, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .catalogue-item .item-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.15), transparent);
+            transform: rotate(45deg) translateX(-100%);
+            transition: transform 0.6s;
+        }
+        .catalogue-item .item-btn:hover::after {
+            transform: rotate(45deg) translateX(100%);
         }
         .catalogue-item .item-btn:hover {
             transform: scale(1.05);
@@ -1120,6 +1192,7 @@
             padding: 2rem 1.5rem;
             margin-top: 2.5rem;
             text-align: center;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
         }
         @media (min-width: 768px) {
             .track-section {
@@ -1414,7 +1487,7 @@
             <div class="crest-wrap">
                 <div class="glow-ring"></div>
                 <div class="crest-image-wrapper">
-                    <!-- Crest image: if it fails to load, we show a fallback text -->
+                    <!-- image0.png (crest) -->
                     <img src="image0.png" alt="Ghost Twenty Crest" class="crest-img" id="crestImg"
                          onerror="this.classList.add('hidden'); document.getElementById('crestFallback').style.display='block';" />
                     <div class="crest-fallback" id="crestFallback" style="display:none;">GT</div>
@@ -1571,64 +1644,76 @@
                 </div>
 
                 <div class="catalogue-grid">
+                    <!-- Product 1 -->
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image1.png" alt="GHOST TEE" loading="lazy" onerror="this.style.display='none'" /></div>
+                        <span class="hot-badge">HOT</span>
+                        <div class="item-image"><img src="image1.jpg" alt="GHOST TEE" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">GHOST TEE</div>
-                        <div class="item-price">$45.00</div>
+                        <div class="item-price">R899.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
+                    <!-- Product 2 -->
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image2.png" alt="CONCRETE HOODIE" loading="lazy" onerror="this.style.display='none'" /></div>
+                        <div class="item-image"><img src="image2.jpg" alt="CONCRETE HOODIE" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">CONCRETE HOODIE</div>
-                        <div class="item-price">$85.00</div>
+                        <div class="item-price">R1599.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
+                    <!-- Product 3 -->
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image3.png" alt="REFLECT WINDBREAKER" loading="lazy" onerror="this.style.display='none'" /></div>
+                        <span class="hot-badge">NEW</span>
+                        <div class="item-image"><img src="image3.jpg" alt="REFLECT WINDBREAKER" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">REFLECT WINDBREAKER</div>
-                        <div class="item-price">$120.00</div>
+                        <div class="item-price">R2199.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
+                    <!-- Product 4 -->
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image4.png" alt="STREET CARGO" loading="lazy" onerror="this.style.display='none'" /></div>
+                        <div class="item-image"><img src="image4.jpg" alt="STREET CARGO" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">STREET CARGO</div>
-                        <div class="item-price">$95.00</div>
+                        <div class="item-price">R1799.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
+                    <!-- Product 5 -->
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image5.png" alt="GRAFF CREWNECK" loading="lazy" onerror="this.style.display='none'" /></div>
+                        <div class="item-image"><img src="image5.jpg" alt="GRAFF CREWNECK" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">GRAFF CREWNECK</div>
-                        <div class="item-price">$75.00</div>
+                        <div class="item-price">R1399.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
+                    <!-- Product 6 -->
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image6.png" alt="BALL SHORTS" loading="lazy" onerror="this.style.display='none'" /></div>
+                        <div class="item-image"><img src="image6.jpg" alt="BALL SHORTS" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">BALL SHORTS</div>
-                        <div class="item-price">$55.00</div>
+                        <div class="item-price">R999.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
+                    <!-- Product 7 -->
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image7.png" alt="CORE BEANIE" loading="lazy" onerror="this.style.display='none'" /></div>
+                        <div class="item-image"><img src="image7.jpg" alt="CORE BEANIE" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">CORE BEANIE</div>
-                        <div class="item-price">$35.00</div>
+                        <div class="item-price">R699.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
+                    <!-- Product 8 -->
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image8.png" alt="UTILITY VEST" loading="lazy" onerror="this.style.display='none'" /></div>
+                        <div class="item-image"><img src="image8.jpg" alt="UTILITY VEST" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">UTILITY VEST</div>
-                        <div class="item-price">$110.00</div>
+                        <div class="item-price">R1999.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
+                    <!-- Product 9 -->
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image9.png" alt="TECH JOGGERS" loading="lazy" onerror="this.style.display='none'" /></div>
+                        <div class="item-image"><img src="image9.jpg" alt="TECH JOGGERS" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">TECH JOGGERS</div>
-                        <div class="item-price">$90.00</div>
+                        <div class="item-price">R1699.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
+                    <!-- Product 10 -->
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image10.png" alt="20TH CAP" loading="lazy" onerror="this.style.display='none'" /></div>
+                        <div class="item-image"><img src="image10.jpg" alt="20TH CAP" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">20TH CAP</div>
-                        <div class="item-price">$40.00</div>
+                        <div class="item-price">R799.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
                 </div>
