@@ -514,6 +514,7 @@
             border: 2px solid var(--glossy-border);
             transform-style: preserve-3d;
             transition: transform 0.3s;
+            background: var(--ink); /* fallback while loading */
         }
         .crest-image-wrapper:hover {
             transform: rotateY(5deg) rotateX(5deg) scale(1.02);
@@ -522,6 +523,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center;
             animation: spin-slow 20s linear infinite;
         }
         .crest-gloss {
@@ -1034,13 +1036,14 @@
             border-radius: 0.75rem;
             overflow: hidden;
             margin-bottom: 0.75rem;
-            background: var(--ink);
+            background: var(--ink); /* fallback while loading */
             border: 1px solid var(--glossy-border);
         }
         .catalogue-item .item-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center;
             transition: transform 0.6s;
         }
         .catalogue-item:hover .item-image img {
@@ -1388,8 +1391,8 @@
             <div class="crest-wrap">
                 <div class="glow-ring"></div>
                 <div class="crest-image-wrapper">
-                    <!-- Replace src with your actual image1.png -->
-                    <img src="image0.png" alt="Ghost Twenty Crest" class="crest-img">
+                    <!-- Replace with your actual crest image (image0.png) -->
+                    <img src="image0.png" alt="Ghost Twenty Crest" class="crest-img" loading="lazy" onerror="this.style.display='none'" />
                     <div class="crest-gloss"></div>
                 </div>
             </div>
@@ -1543,63 +1546,63 @@
                 </div>
 
                 <div class="catalogue-grid">
-                    <!-- Replace src with your actual image1.png for each, or use different seeds -->
+                    <!-- Replace src with your actual product images (image1.png ... image10.png) -->
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image1.png" alt="Product 1"></div>
+                        <div class="item-image"><img src="image1.png" alt="GHOST TEE" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">GHOST TEE</div>
                         <div class="item-price">$45.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image2.png" alt="Product 2"></div>
+                        <div class="item-image"><img src="image2.png" alt="CONCRETE HOODIE" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">CONCRETE HOODIE</div>
                         <div class="item-price">$85.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image3.png" alt="Product 3"></div>
+                        <div class="item-image"><img src="image3.png" alt="REFLECT WINDBREAKER" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">REFLECT WINDBREAKER</div>
                         <div class="item-price">$120.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image4.png" alt="Product 4"></div>
+                        <div class="item-image"><img src="image4.png" alt="STREET CARGO" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">STREET CARGO</div>
                         <div class="item-price">$95.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image5.png" alt="Product 5"></div>
+                        <div class="item-image"><img src="image5.png" alt="GRAFF CREWNECK" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">GRAFF CREWNECK</div>
                         <div class="item-price">$75.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image6.png" alt="Product 6"></div>
+                        <div class="item-image"><img src="image6.png" alt="BALL SHORTS" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">BALL SHORTS</div>
                         <div class="item-price">$55.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image7.png" alt="Product 7"></div>
+                        <div class="item-image"><img src="image7.png" alt="CORE BEANIE" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">CORE BEANIE</div>
                         <div class="item-price">$35.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image8.png" alt="Product 8"></div>
+                        <div class="item-image"><img src="image8.png" alt="UTILITY VEST" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">UTILITY VEST</div>
                         <div class="item-price">$110.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image9.png" alt="Product 9"></div>
+                        <div class="item-image"><img src="image9.png" alt="TECH JOGGERS" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">TECH JOGGERS</div>
                         <div class="item-price">$90.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
                     </div>
                     <div class="catalogue-item">
-                        <div class="item-image"><img src="image10.png" alt="Product 10"></div>
+                        <div class="item-image"><img src="image10.png" alt="20TH CAP" loading="lazy" onerror="this.style.display='none'" /></div>
                         <div class="item-title">20TH CAP</div>
                         <div class="item-price">$40.00</div>
                         <button class="item-btn" onclick="alert('Added to cart!')">BUY</button>
